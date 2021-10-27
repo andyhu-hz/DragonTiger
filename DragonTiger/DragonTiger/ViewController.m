@@ -44,7 +44,7 @@ uint8_t click_count = 0;
         }
     }
 
-    [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(onTimer) userInfo:nil repeats:YES];
+    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(onTimer) userInfo:nil repeats:YES];
     [self ReadPersonData];
     ((UILabel *)[self.view viewWithTag:11]).text = [NSString stringWithFormat: @"%d", myMoney];
 }
@@ -68,7 +68,7 @@ uint8_t click_count = 0;
 
 - (IBAction)reStart:(id)obj {
     ++ click_count;
-    if(1000 == click_count) {
+    if(100 == click_count) {
         click_count = 0;
         myMoney = 1000;
         bet_long = 0;
@@ -92,34 +92,18 @@ uint8_t click_count = 0;
     return result;
 }
 
--(NSString*)ConvertPoint:(int)suit {
+-(NSString*)ConvertPoint:(int)point {
     NSString *result = nil;
-    if(1 == suit) {
+    if(1 == point) {
         result = [NSString stringWithString:@"A"];
-    } else if(2 == suit) {
-        result = [NSString stringWithString:@"2"];
-    } else if(3 == suit) {
-        result = [NSString stringWithString:@"3"];
-    } else if(4 == suit) {
-        result = [NSString stringWithString:@"4"];
-    } else if(5 == suit) {
-        result = [NSString stringWithString:@"5"];
-    } else if(6 == suit) {
-        result = [NSString stringWithString:@"6"];
-    } else if(7 == suit) {
-        result = [NSString stringWithString:@"7"];
-    } else if(8 == suit) {
-        result = [NSString stringWithString:@"8"];
-    } else if(9 == suit) {
-        result = [NSString stringWithString:@"9"];
-    } else if(10 == suit) {
-        result = [NSString stringWithString:@"10"];
-    } else if(11 == suit) {
+    } else if(11 == point) {
         result = [NSString stringWithString:@"J"];
-    } else if(12 == suit) {
+    } else if(12 == point) {
         result = [NSString stringWithString:@"Q"];
-    } else if(13 == suit) {
+    } else if(13 == point) {
         result = [NSString stringWithString:@"K"];
+    } else {
+        result = [NSString stringWithFormat:@"%d", point];
     }
     return result;
 }
@@ -127,21 +111,20 @@ uint8_t click_count = 0;
 -(void)RoundEnd {
     uint8_t i = arc4random_uniform(8);
     uint8_t j = arc4random_uniform(4);
-    uint8_t k = arc4random_uniform(14);
+    uint8_t k = arc4random_uniform(13);
     uint32_t poker_long = poker[i][j][k];
     uint8_t point_long = poker_long % 100;
-
     NSString* suit_long_str = [self ConvertSuit: poker_long / 100];
     NSString* point_long_str = [self ConvertPoint:(point_long)];
 
     uint8_t ii = arc4random_uniform(8);
     uint8_t jj = arc4random_uniform(4);
-    uint8_t kk = arc4random_uniform(14);
+    uint8_t kk = arc4random_uniform(13);
     
     while(i == ii && j == jj && k == kk) {
         ii = arc4random_uniform(8);
         jj = arc4random_uniform(4);
-        kk = arc4random_uniform(14);
+        kk = arc4random_uniform(13);
     }
 
     uint32_t poker_hu = poker[ii][jj][kk];
@@ -151,6 +134,7 @@ uint8_t click_count = 0;
     NSString* point_hu_str = [self ConvertPoint:(point_hu)];
     
     if(nil == suit_long_str || nil == point_long_str || nil == suit_hu_str || nil == point_hu_str) {
+        //NSLog(@"Bug: i= %d, j=%d, k=%d, ii=%d, jj=%d, kk=%d, long=%d, hu=%d \n", i, j, k, ii, jj, kk, poker_long, poker_hu);
         ((UILabel *)[self.view viewWithTag:55]).text = [NSString stringWithFormat: @"Bug!!"];
         return;
     }
@@ -171,7 +155,7 @@ uint8_t click_count = 0;
         myMoney += bet_long / 2;
         myMoney += bet_hu / 2;
         myMoney += 8 * bet_he;
-        ((UILabel *)[self.view viewWithTag:55]).text = [NSString stringWithFormat: @"和"];
+        ((UILabel *)[self.view viewWithTag:55]).text = [NSString stringWithFormat: @"和胜"];
     }
     
     bet_long = 0;
