@@ -66,6 +66,8 @@
 		BDDA4AC6272A8B1300564900 /* 105.png in Resources */ = {isa = PBXBuildFile; fileRef = BDDA4A92272A8B1300564900 /* 105.png */; };
 		BDDA4AC7272A8B1300564900 /* 412.png in Resources */ = {isa = PBXBuildFile; fileRef = BDDA4A93272A8B1300564900 /* 412.png */; };
 		BDDA4AC8272A8B1300564900 /* 212.png in Resources */ = {isa = PBXBuildFile; fileRef = BDDA4A94272A8B1300564900 /* 212.png */; };
+		BDDA4ACE272B219500564900 /* goldcoin.png in Resources */ = {isa = PBXBuildFile; fileRef = BDDA4ACD272B219500564900 /* goldcoin.png */; };
+		BDDA4AD0272B307F00564900 /* longhudou.png in Resources */ = {isa = PBXBuildFile; fileRef = BDDA4ACF272B307F00564900 /* longhudou.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -133,6 +135,8 @@
 		BDDA4A92272A8B1300564900 /* 105.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 105.png; sourceTree = "<group>"; };
 		BDDA4A93272A8B1300564900 /* 412.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 412.png; sourceTree = "<group>"; };
 		BDDA4A94272A8B1300564900 /* 212.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 212.png; sourceTree = "<group>"; };
+		BDDA4ACD272B219500564900 /* goldcoin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = goldcoin.png; sourceTree = "<group>"; };
+		BDDA4ACF272B307F00564900 /* longhudou.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = longhudou.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,7 +169,7 @@
 		BDB336BE2726E8D500E0CAB3 /* DragonTiger */ = {
 			isa = PBXGroup;
 			children = (
-				BDDA4A60272A8AA200564900 /* poker */,
+				BDDA4A60272A8AA200564900 /* resource */,
 				BDB336BF2726E8D500E0CAB3 /* AppDelegate.h */,
 				BDB336C02726E8D500E0CAB3 /* AppDelegate.m */,
 				BDB336C22726E8D500E0CAB3 /* SceneDelegate.h */,
@@ -181,9 +185,11 @@
 			path = DragonTiger;
 			sourceTree = "<group>";
 		};
-		BDDA4A60272A8AA200564900 /* poker */ = {
+		BDDA4A60272A8AA200564900 /* resource */ = {
 			isa = PBXGroup;
 			children = (
+				BDDA4ACF272B307F00564900 /* longhudou.png */,
+				BDDA4ACD272B219500564900 /* goldcoin.png */,
 				BDDA4A7E272A8B1200564900 /* 101.png */,
 				BDDA4A83272A8B1200564900 /* 102.png */,
 				BDDA4A81272A8B1200564900 /* 103.png */,
@@ -237,7 +243,7 @@
 				BDDA4A93272A8B1300564900 /* 412.png */,
 				BDDA4A91272A8B1300564900 /* 413.png */,
 			);
-			path = poker;
+			path = resource;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -340,6 +346,7 @@
 				BDDA4ABD272A8B1300564900 /* 207.png in Resources */,
 				BDDA4AC3272A8B1300564900 /* 310.png in Resources */,
 				BDDA4AAC272A8B1300564900 /* 208.png in Resources */,
+				BDDA4AD0272B307F00564900 /* longhudou.png in Resources */,
 				BDDA4A9A272A8B1300564900 /* 313.png in Resources */,
 				BDB336CF2726E8D700E0CAB3 /* LaunchScreen.storyboard in Resources */,
 				BDDA4AB9272A8B1300564900 /* 302.png in Resources */,
@@ -351,6 +358,7 @@
 				BDDA4AB0272A8B1300564900 /* 405.png in Resources */,
 				BDB336CC2726E8D700E0CAB3 /* Assets.xcassets in Resources */,
 				BDDA4AA7272A8B1300564900 /* 408.png in Resources */,
+				BDDA4ACE272B219500564900 /* goldcoin.png in Resources */,
 				BDB336CA2726E8D500E0CAB3 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

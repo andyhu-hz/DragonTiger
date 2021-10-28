@@ -55,7 +55,16 @@ uint8_t click_count = 0;
     path = [[NSBundle mainBundle] pathForResource:@"313" ofType:@"png"];
     image = [UIImage imageWithContentsOfFile:path];
     [((UIImageView *)[self.view viewWithTag:188]) setImage:image];
-       
+    
+    path = [[NSBundle mainBundle] pathForResource:@"longhudou" ofType:@"png"];
+    image = [UIImage imageWithContentsOfFile:path];
+    [((UIImageView *)[self.view viewWithTag:300]) setImage:image];
+    
+    path = [[NSBundle mainBundle] pathForResource:@"goldcoin" ofType:@"png"];
+    image = [UIImage imageWithContentsOfFile:path];
+    [((UIImageView *)[self.view viewWithTag:200]) setImage:image];
+    [((UIImageView *)[self.view viewWithTag:201]) setImage:image];
+    
     [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(onTimer) userInfo:nil repeats:YES];
     [self ReadPersonData];
     ((UILabel *)[self.view viewWithTag:11]).text = [NSString stringWithFormat: @"%d", myMoney];
@@ -132,13 +141,17 @@ uint8_t click_count = 0;
         outcome = 2 * bet_hu - bet_total;
         winner = [NSString stringWithFormat: @"虎胜"];
     } else {
-        int32_t award = bet_long / 2 + bet_hu + 8 * bet_he/ 2;
+        int32_t award = bet_long/2 + bet_hu/2 + 9 * bet_he;
         myMoney += award;
         outcome = award - bet_total;
         winner = [NSString stringWithFormat: @"和胜"];
     }
     ((UILabel *)[self.view viewWithTag:55]).text = winner;
-    ((UILabel *)[self.view viewWithTag:199]).text = [NSString stringWithFormat: @"你赢了  %d", outcome];
+    if(outcome >=  0) {
+        ((UILabel *)[self.view viewWithTag:199]).text = [NSString stringWithFormat: @"+%d", outcome];
+    } else {
+        ((UILabel *)[self.view viewWithTag:199]).text = [NSString stringWithFormat: @"%d", outcome];
+    }
 
     bet_long = 0;
     bet_hu = 0;
@@ -151,7 +164,7 @@ uint8_t click_count = 0;
     if(myMoney >= 100) {
         ((UILabel *)[self.view viewWithTag:11]).text = [NSString stringWithFormat: @"%d", myMoney];
     } else {
-        ((UILabel *)[self.view viewWithTag:11]).text = [NSString stringWithFormat: @"%d 破产...", myMoney];
+        ((UILabel *)[self.view viewWithTag:11]).text = [NSString stringWithFormat: @"%d 破产了", myMoney];
     }
     [self SavePersonData];
 }
