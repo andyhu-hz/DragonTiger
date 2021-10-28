@@ -14,11 +14,11 @@ enum select_type {
 };
 
 uint8_t current_select = TYPE_LONG;
-uint8_t winner = 0;  // 1:long 2:hu 3:he
 
 uint32_t bet_long = 0;
 uint32_t bet_hu = 0;
 uint32_t bet_he = 0;
+uint32_t bet_total = 0;
 
 uint32_t poker[8][4][13] = {0};
 uint8_t timer_count = 0;
@@ -36,6 +36,10 @@ uint8_t click_count = 0;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [self Init];
+}
+
+-(void)Init {
     for(uint8_t i=0; i<8; i++) {
         for(uint8_t j=0; j<4; j++) {
             for(uint8_t k=0; k<13; k++) {
@@ -43,10 +47,19 @@ uint8_t click_count = 0;
             }
         }
     }
-
+    
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"113" ofType:@"png"];
+    UIImage *image = [UIImage imageWithContentsOfFile:path];
+    [((UIImageView *)[self.view viewWithTag:177]) setImage:image];
+    
+    path = [[NSBundle mainBundle] pathForResource:@"313" ofType:@"png"];
+    image = [UIImage imageWithContentsOfFile:path];
+    [((UIImageView *)[self.view viewWithTag:188]) setImage:image];
+       
     [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(onTimer) userInfo:nil repeats:YES];
     [self ReadPersonData];
     ((UILabel *)[self.view viewWithTag:11]).text = [NSString stringWithFormat: @"%d", myMoney];
+    [(UIButton *)[self.view viewWithTag:1] setBackgroundColor:[UIColor greenColor]];
 }
 
 -(void)SavePersonData {
@@ -78,44 +91,12 @@ uint8_t click_count = 0;
     }
 }
 
--(NSString*)ConvertSuit:(int)suit {
-    NSString *result = nil;
-    if(1 == suit) {
-        result = [NSString stringWithString:@"红桃"];
-    } else if(2 == suit) {
-        result = [NSString stringWithString:@"方块"];
-    } else if(3 == suit) {
-        result = [NSString stringWithString:@"黑桃"];
-    } else if(4 == suit) {
-        result = [NSString stringWithString:@"梅花"];
-    }
-    return result;
-}
-
--(NSString*)ConvertPoint:(int)point {
-    NSString *result = nil;
-    if(1 == point) {
-        result = [NSString stringWithString:@"A"];
-    } else if(11 == point) {
-        result = [NSString stringWithString:@"J"];
-    } else if(12 == point) {
-        result = [NSString stringWithString:@"Q"];
-    } else if(13 == point) {
-        result = [NSString stringWithString:@"K"];
-    } else {
-        result = [NSString stringWithFormat:@"%d", point];
-    }
-    return result;
-}
-
 -(void)RoundEnd {
     uint8_t i = arc4random_uniform(8);
     uint8_t j = arc4random_uniform(4);
     uint8_t k = arc4random_uniform(13);
     uint32_t poker_long = poker[i][j][k];
     uint8_t point_long = poker_long % 100;
-    NSString* suit_long_str = [self ConvertSuit: poker_long / 100];
-    NSString* point_long_str = [self ConvertPoint:(point_long)];
 
     uint8_t ii = arc4random_uniform(8);
     uint8_t jj = arc4random_uniform(4);
@@ -130,44 +111,47 @@ uint8_t click_count = 0;
     uint32_t poker_hu = poker[ii][jj][kk];
     uint8_t point_hu = poker_hu % 100;
 
-    NSString* suit_hu_str = [self ConvertSuit: poker_hu / 100];
-    NSString* point_hu_str = [self ConvertPoint:(point_hu)];
     
-    if(nil == suit_long_str || nil == point_long_str || nil == suit_hu_str || nil == point_hu_str) {
-        //NSLog(@"Bug: i= %d, j=%d, k=%d, ii=%d, jj=%d, kk=%d, long=%d, hu=%d \n", i, j, k, ii, jj, kk, poker_long, poker_hu);
-        ((UILabel *)[self.view viewWithTag:55]).text = [NSString stringWithFormat: @"Bug!!"];
-        return;
-    }
-
-    ((UILabel *)[self.view viewWithTag:22]).text = [NSString stringWithFormat: @"%@%@", suit_long_str, point_long_str];
-    ((UILabel *)[self.view viewWithTag:33]).text = [NSString stringWithFormat: @"%@%@", suit_hu_str, point_hu_str];
-
+    NSString *path = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"%i",poker_long] ofType:@"png"];
+    UIImage *image = [UIImage imageWithContentsOfFile:path];
+    [((UIImageView *)[self.view viewWithTag:177]) setImage:image];
+    
+    path = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"%i",poker_hu] ofType:@"png"];
+    image = [UIImage imageWithContentsOfFile:path];
+    [((UIImageView *)[self.view viewWithTag:188]) setImage:image];
+    
+    int32_t outcome = 0;
+    NSString* winner = nil;
     if(point_long > point_hu) {
-        winner = TYPE_LONG;
         myMoney += 2 * bet_long;
-        ((UILabel *)[self.view viewWithTag:55]).text = [NSString stringWithFormat: @"龍胜"];
+        outcome = 2 * bet_long - bet_total;
+        winner = [NSString stringWithFormat: @"龙胜"];
+        ((UILabel *)[self.view viewWithTag:55]).text = [NSString stringWithFormat: @"龙胜  %d", outcome];
     } else if (point_long < point_hu) {
-        winner = TYPE_HU;
         myMoney += 2 * bet_hu;
-        ((UILabel *)[self.view viewWithTag:55]).text = [NSString stringWithFormat: @"虎胜"];
+        outcome = 2 * bet_hu - bet_total;
+        winner = [NSString stringWithFormat: @"虎胜"];
     } else {
-        winner = TYPE_HE;
-        myMoney += bet_long / 2;
-        myMoney += bet_hu / 2;
-        myMoney += 8 * bet_he;
-        ((UILabel *)[self.view viewWithTag:55]).text = [NSString stringWithFormat: @"和胜"];
+        int32_t award = bet_long / 2 + bet_hu + 8 * bet_he/ 2;
+        myMoney += award;
+        outcome = award - bet_total;
+        winner = [NSString stringWithFormat: @"和胜"];
     }
-    
+    ((UILabel *)[self.view viewWithTag:55]).text = winner;
+    ((UILabel *)[self.view viewWithTag:199]).text = [NSString stringWithFormat: @"你赢了  %d", outcome];
+
     bet_long = 0;
     bet_hu = 0;
     bet_he = 0;
+    bet_total = 0;
+
     ((UILabel *)[self.view viewWithTag:66]).text = [NSString stringWithFormat: @"%d", bet_long];
     ((UILabel *)[self.view viewWithTag:77]).text = [NSString stringWithFormat: @"%d", bet_hu];
     ((UILabel *)[self.view viewWithTag:88]).text = [NSString stringWithFormat: @"%d", bet_he];
     if(myMoney >= 100) {
         ((UILabel *)[self.view viewWithTag:11]).text = [NSString stringWithFormat: @"%d", myMoney];
     } else {
-        ((UILabel *)[self.view viewWithTag:11]).text = [NSString stringWithFormat: @"%d输光了", myMoney];
+        ((UILabel *)[self.view viewWithTag:11]).text = [NSString stringWithFormat: @"%d 破产...", myMoney];
     }
     [self SavePersonData];
 }
@@ -184,21 +168,21 @@ uint8_t click_count = 0;
 
 - (IBAction)IsDragonSelected:(id)obj {
     current_select = TYPE_LONG;
-    [(UIButton*)obj setBackgroundColor:[UIColor orangeColor]];
+    [(UIButton*)obj setBackgroundColor:[UIColor greenColor]];
     [(UIButton *)[self.view viewWithTag:2] setBackgroundColor:[UIColor systemGray6Color]];
     [(UIButton *)[self.view viewWithTag:3] setBackgroundColor:[UIColor systemGray6Color]];
 }
 
 - (IBAction)IsHuSelected:(id)obj {
     current_select = TYPE_HU;
-    [(UIButton*)obj setBackgroundColor:[UIColor orangeColor]];
+    [(UIButton*)obj setBackgroundColor:[UIColor greenColor]];
     [(UIButton *)[self.view viewWithTag:1] setBackgroundColor:[UIColor systemGray6Color]];
     [(UIButton *)[self.view viewWithTag:3] setBackgroundColor:[UIColor systemGray6Color]];
 }
 
 - (IBAction)IsHeSelected:(id)obj {
     current_select = TYPE_HE;
-    [(UIButton*)obj setBackgroundColor:[UIColor orangeColor]];
+    [(UIButton*)obj setBackgroundColor:[UIColor greenColor]];
     [(UIButton *)[self.view viewWithTag:1] setBackgroundColor:[UIColor systemGray6Color]];
     [(UIButton *)[self.view viewWithTag:2] setBackgroundColor:[UIColor systemGray6Color]];
 }
@@ -206,6 +190,7 @@ uint8_t click_count = 0;
 -(void) UpdateBet:(int)num {
     if(myMoney >= num) {
         myMoney -= num;
+        bet_total += num;
         if(TYPE_LONG == current_select) {
             bet_long += num;
         } else if(TYPE_HU == current_select) {
@@ -216,7 +201,6 @@ uint8_t click_count = 0;
         ((UILabel *)[self.view viewWithTag:66]).text = [NSString stringWithFormat: @"%d", bet_long];
         ((UILabel *)[self.view viewWithTag:77]).text = [NSString stringWithFormat: @"%d", bet_hu];
         ((UILabel *)[self.view viewWithTag:88]).text = [NSString stringWithFormat: @"%d", bet_he];
-        
         ((UILabel *)[self.view viewWithTag:11]).text = [NSString stringWithFormat: @"%d", myMoney];
     }
 }
@@ -236,7 +220,5 @@ uint8_t click_count = 0;
 - (IBAction)add1m:(id)obj {
     [self UpdateBet:1000000];
 }
-- (IBAction)add10m:(id)obj {
-    [self UpdateBet:10000000];
-}
+
 @end
