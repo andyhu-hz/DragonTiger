@@ -6,6 +6,8 @@
 //
 
 #import "ViewController.h"
+#import <AudioToolbox/AudioToolbox.h>
+
 
 enum select_type {
     TYPE_LONG = 0,
@@ -23,7 +25,6 @@ uint32_t bet_total = 0;
 uint32_t poker[8][4][13] = {0};
 uint8_t timer_count = 0;
 
-
 uint32_t myMoney = 1000;
 uint8_t click_count = 0;
 
@@ -38,6 +39,22 @@ uint8_t click_count = 0;
     // Do any additional setup after loading the view.
     [self Init];
 }
+
+-(void)tapDetected{
+    ++ click_count;
+    if(100 == click_count && myMoney < 100) {
+        AudioServicesPlaySystemSound (1520);
+        click_count = 0;
+        myMoney = 1000;
+        bet_long = 0;
+        bet_hu = 0;
+        bet_he = 0;
+        ((UILabel *)[self.view viewWithTag:11]).text = [NSString stringWithFormat: @"%d", myMoney];
+    } else {
+        AudioServicesPlaySystemSound (1521);
+    }
+}
+
 
 -(void)Init {
     for(uint8_t i=0; i<8; i++) {
@@ -63,7 +80,12 @@ uint8_t click_count = 0;
     path = [[NSBundle mainBundle] pathForResource:@"goldcoin" ofType:@"png"];
     image = [UIImage imageWithContentsOfFile:path];
     [((UIImageView *)[self.view viewWithTag:200]) setImage:image];
-    [((UIImageView *)[self.view viewWithTag:201]) setImage:image];
+    
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapDetected)];
+    singleTap.numberOfTapsRequired = 1;
+    [((UIImageView *)[self.view viewWithTag:200])  setUserInteractionEnabled:YES];
+    [((UIImageView *)[self.view viewWithTag:200])  addGestureRecognizer:singleTap];
+  
     
     [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(onTimer) userInfo:nil repeats:YES];
     [self ReadPersonData];
@@ -85,18 +107,6 @@ uint8_t click_count = 0;
     } else {
         [userDefault setObject:[NSNumber numberWithInt:1] forKey:@"initialized"];
         [[NSUserDefaults standardUserDefaults] synchronize];
-    }
-}
-
-- (IBAction)reStart:(id)obj {
-    ++ click_count;
-    if(100 == click_count) {
-        click_count = 0;
-        myMoney = 1000;
-        bet_long = 0;
-        bet_hu = 0;
-        bet_he = 0;
-        ((UILabel *)[self.view viewWithTag:11]).text = [NSString stringWithFormat: @"%d", myMoney];
     }
 }
 
@@ -167,6 +177,7 @@ uint8_t click_count = 0;
         ((UILabel *)[self.view viewWithTag:11]).text = [NSString stringWithFormat: @"%d 破产了", myMoney];
     }
     [self SavePersonData];
+    AudioServicesPlaySystemSound(1100);
 }
 
 -(void) onTimer {
