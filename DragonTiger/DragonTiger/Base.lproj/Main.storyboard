@@ -32,7 +32,6 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="gray" title="+1千"/>
                                 <connections>
-                                    <action selector="add10k:" destination="BYZ-38-t0r" eventType="touchUpInside" id="oQE-iU-2fx"/>
                                     <action selector="add1k:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6MI-DK-hdx"/>
                                 </connections>
                             </button>
@@ -113,7 +112,6 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="gray" title="+1万"/>
                                 <connections>
-                                    <action selector="add100k:" destination="BYZ-38-t0r" eventType="touchUpInside" id="VLd-fr-ODt"/>
                                     <action selector="add10k:" destination="BYZ-38-t0r" eventType="touchUpInside" id="U5F-Qm-qAY"/>
                                 </connections>
                             </button>
