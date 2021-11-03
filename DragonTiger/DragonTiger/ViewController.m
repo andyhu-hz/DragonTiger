@@ -8,6 +8,8 @@
 #import "ViewController.h"
 #import <AudioToolbox/AudioToolbox.h>
 
+#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
+
 
 enum select_type {
     TYPE_LONG = 0,
@@ -32,8 +34,12 @@ uint32_t myMoney = 1000;
 uint8_t click_count = 0;
 
 @interface ViewController ()
-
 @property (nonatomic, strong) NSTimer * mytimer;
+@property (nonatomic, strong) UIView * upView;
+@property (nonatomic, strong) UIView * downView;
+
+@property (nonatomic, strong) CAGradientLayer * gradientLayerUp;
+@property (nonatomic, strong) CAGradientLayer * gradientLayerDown;
 
 @end
 
@@ -77,10 +83,21 @@ uint8_t click_count = 0;
     image = [UIImage imageWithContentsOfFile:path];
     [((UIImageView *)[self.view viewWithTag:188]) setImage:image];
     
-    path = [[NSBundle mainBundle] pathForResource:@"longhudou" ofType:@"png"];
+    path = [[NSBundle mainBundle] pathForResource:@"heguan" ofType:@"png"];
     image = [UIImage imageWithContentsOfFile:path];
     [((UIImageView *)[self.view viewWithTag:300]) setImage:image];
+    path = [[NSBundle mainBundle] pathForResource:@"desk" ofType:@"png"];
+    image = [UIImage imageWithContentsOfFile:path];
+    [((UIImageView *)[self.view viewWithTag:301]) setImage:image];
     
+    [self.view sendSubviewToBack:((UIImageView *)[self.view viewWithTag:301])];
+    [self.view sendSubviewToBack:((UIImageView *)[self.view viewWithTag:300])];
+
+
+    
+    [self.view bringSubviewToFront:((UIImageView *)[self.view viewWithTag:177])];
+    [self.view bringSubviewToFront:((UIImageView *)[self.view viewWithTag:188])];
+
     path = [[NSBundle mainBundle] pathForResource:@"goldcoin" ofType:@"png"];
     image = [UIImage imageWithContentsOfFile:path];
     [((UIImageView *)[self.view viewWithTag:200]) setImage:image];
@@ -94,7 +111,91 @@ uint8_t click_count = 0;
     self.mytimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(onTimer) userInfo:nil repeats:YES];
     [self ReadPersonData];
     ((UILabel *)[self.view viewWithTag:11]).text = [NSString stringWithFormat: @"%d", myMoney];
-    [(UIButton *)[self.view viewWithTag:1] setBackgroundColor:[UIColor greenColor]];
+    
+    [self SetBackgroundColor];
+    [(UIButton *)[self.view viewWithTag:1] setBackgroundColor:[UIColor yellowColor]];
+}
+
+-(void)SetBackgroundColor{
+    //实现背景渐变
+    
+    //初始化我们需要改变背景色的UIView，并添加在视图上
+    uint32_t width = [UIScreen mainScreen].bounds.size.width;
+    uint32_t height = [UIScreen mainScreen].bounds.size.height;
+    
+    self.upView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, height/2)];
+    self.downView = [[UIView alloc] initWithFrame:CGRectMake(0, height/2, width, height/2)];
+
+    [self.view addSubview:self.upView];
+    [self.view addSubview:self.downView];
+
+    
+    //初始化CAGradientlayer对象，使它的大小为UIView的大小
+    self.gradientLayerUp = [CAGradientLayer layer];
+    self.gradientLayerUp.frame = self.upView.bounds;
+    
+    self.gradientLayerDown = [CAGradientLayer layer];
+    self.gradientLayerDown.frame = self.downView.bounds;
+    
+    //将CAGradientlayer对象添加在我们要设置背景色的视图的layer层
+    [self.upView.layer addSublayer:self.gradientLayerUp];
+    [self.downView.layer addSublayer:self.gradientLayerDown];
+
+    
+    //设置渐变区域的起始和终止位置（范围为0-1）
+    self.gradientLayerUp.startPoint = CGPointMake(0, 0);
+    self.gradientLayerUp.endPoint = CGPointMake(0, 1);
+    
+    self.gradientLayerDown.startPoint = CGPointMake(0, 0.2);
+    self.gradientLayerDown.endPoint = CGPointMake(0, 1);
+    
+    //设置颜色数组
+    CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
+    //UIColorFromRGB(0x205744)
+    //UIColorFromRGB(0x21ABA3)
+    CGFloat componennts_first[4] = {32/255.f, 87/255.f, 68/255.f, 1.0f};
+    CGFloat componennts_second[4] = {33/255.f, 171/255.f, 163/255.f, 1.0f};
+    self.gradientLayerUp.colors = @[(__bridge id)CGColorCreate(colorspace, (CGFloat*)componennts_first), (__bridge id)CGColorCreate(colorspace, (CGFloat*)componennts_second)];
+    self.gradientLayerDown.colors = @[(__bridge id)CGColorCreate(colorspace, (CGFloat*)componennts_second), (__bridge id)CGColorCreate(colorspace, (CGFloat*)componennts_first)];
+
+    
+    //设置颜色分割点（范围：0-1）
+    self.gradientLayerUp.locations = @[@(0.0f), @(0.5f)];
+    self.gradientLayerDown.locations = @[@(0.0f), @(0.5f)];
+    [self.view sendSubviewToBack:self.upView];
+    [self.view sendSubviewToBack:self.downView];
+
+    [(UIButton *)[self.view viewWithTag:1] setBackgroundColor:UIColorFromRGB(0x21ABA3)];
+    ((UIButton *)[self.view viewWithTag:1]).layer.cornerRadius = 8;
+    ((UIButton *)[self.view viewWithTag:1]).layer.masksToBounds = YES;
+
+    [(UIButton *)[self.view viewWithTag:2] setBackgroundColor:UIColorFromRGB(0x21ABA3)];
+    ((UIButton *)[self.view viewWithTag:2]).layer.cornerRadius = 8;
+    ((UIButton *)[self.view viewWithTag:2]).layer.masksToBounds = YES;
+
+    [(UIButton *)[self.view viewWithTag:3] setBackgroundColor:UIColorFromRGB(0x21ABA3)];
+    ((UIButton *)[self.view viewWithTag:3]).layer.cornerRadius = 8;
+    ((UIButton *)[self.view viewWithTag:3]).layer.masksToBounds = YES;
+
+    [(UIButton *)[self.view viewWithTag:100] setBackgroundColor:UIColorFromRGB(0x21ABA3)];
+    ((UIButton *)[self.view viewWithTag:100]).layer.cornerRadius = 8;
+    ((UIButton *)[self.view viewWithTag:100]).layer.masksToBounds = YES;
+
+    [(UIButton *)[self.view viewWithTag:1000] setBackgroundColor:UIColorFromRGB(0x21ABA3)];
+    ((UIButton *)[self.view viewWithTag:1000]).layer.cornerRadius = 8;
+    ((UIButton *)[self.view viewWithTag:1000]).layer.masksToBounds = YES;
+
+    [(UIButton *)[self.view viewWithTag:10000] setBackgroundColor:UIColorFromRGB(0x21ABA3)];
+    ((UIButton *)[self.view viewWithTag:10000]).layer.cornerRadius = 8;
+    ((UIButton *)[self.view viewWithTag:10000]).layer.masksToBounds = YES;
+
+    [(UIButton *)[self.view viewWithTag:100000] setBackgroundColor:UIColorFromRGB(0x21ABA3)];
+    ((UIButton *)[self.view viewWithTag:100000]).layer.cornerRadius = 8;
+    ((UIButton *)[self.view viewWithTag:100000]).layer.masksToBounds = YES;
+
+    [(UIButton *)[self.view viewWithTag:1000000] setBackgroundColor:UIColorFromRGB(0x21ABA3)];
+    ((UIButton *)[self.view viewWithTag:1000000]).layer.cornerRadius = 8;
+    ((UIButton *)[self.view viewWithTag:1000000]).layer.masksToBounds = YES;
 }
 
 -(void)SavePersonData {
@@ -163,7 +264,10 @@ uint8_t click_count = 0;
         outcome = award - bet_total;
         winner = [NSString stringWithFormat: @"和胜"];
     }
-    ((UILabel *)[self.view viewWithTag:55]).text = winner;
+    
+    [self SavePersonData];
+
+    ((UILabel *)[self.view viewWithTag:55]).text = [NSString stringWithFormat: @"上轮%@", winner];
     if(outcome >=  0) {
         ((UILabel *)[self.view viewWithTag:199]).text = [NSString stringWithFormat: @"+%d", outcome];
     } else {
@@ -178,21 +282,17 @@ uint8_t click_count = 0;
     ((UILabel *)[self.view viewWithTag:66]).text = [NSString stringWithFormat: @"%d", bet_long];
     ((UILabel *)[self.view viewWithTag:77]).text = [NSString stringWithFormat: @"%d", bet_hu];
     ((UILabel *)[self.view viewWithTag:88]).text = [NSString stringWithFormat: @"%d", bet_he];
-    if(myMoney >= 100) {
-        ((UILabel *)[self.view viewWithTag:11]).text = [NSString stringWithFormat: @"%d", myMoney];
-    } else {
-        ((UILabel *)[self.view viewWithTag:11]).text = [NSString stringWithFormat: @"%d 破产了", myMoney];
-    }
+    ((UILabel *)[self.view viewWithTag:11]).text = [NSString stringWithFormat: @"%d", myMoney];
     AudioServicesPlaySystemSound (1103);
 }
 
 -(void) onTimer {
     timer_count ++;
     [self SavePersonData];
-    if(4 < timer_count) {
-        [(UIProgressView *)[self.view viewWithTag:10] setProgress:((float)(timer_count-5)/10.0) animated:YES];
+    if(3 < timer_count) {
+        [(UIProgressView *)[self.view viewWithTag:10] setProgress:((float)(timer_count-4)/10.0) animated:YES];
     }
-    if(5 == timer_count) {
+    if(4 == timer_count) {
         NSString *path = [[NSBundle mainBundle] pathForResource:@"back" ofType:@"png"];
         UIImage *image = [UIImage imageWithContentsOfFile:path];
         CATransition *transition = [CATransition animation];
@@ -205,7 +305,7 @@ uint8_t click_count = 0;
         in_round = true;
     }
 
-    if(13 == timer_count) {
+    if(14 == timer_count) {
         [self ShowPokerLong];
     }
     
@@ -213,28 +313,27 @@ uint8_t click_count = 0;
         [self RoundEnd];
         timer_count = 0;
     }
-    [self SavePersonData];
 }
 
 - (IBAction)IsDragonSelected:(id)obj {
     current_select = TYPE_LONG;
-    [(UIButton*)obj setBackgroundColor:[UIColor greenColor]];
-    [(UIButton *)[self.view viewWithTag:2] setBackgroundColor:[UIColor systemGray6Color]];
-    [(UIButton *)[self.view viewWithTag:3] setBackgroundColor:[UIColor systemGray6Color]];
+    [(UIButton*)obj setBackgroundColor:[UIColor yellowColor]];
+    [(UIButton *)[self.view viewWithTag:2] setBackgroundColor:UIColorFromRGB(0x21ABA3)];
+    [(UIButton *)[self.view viewWithTag:3] setBackgroundColor:UIColorFromRGB(0x21ABA3)];
 }
 
 - (IBAction)IsHuSelected:(id)obj {
     current_select = TYPE_HU;
-    [(UIButton*)obj setBackgroundColor:[UIColor greenColor]];
-    [(UIButton *)[self.view viewWithTag:1] setBackgroundColor:[UIColor systemGray6Color]];
-    [(UIButton *)[self.view viewWithTag:3] setBackgroundColor:[UIColor systemGray6Color]];
+    [(UIButton*)obj setBackgroundColor:[UIColor yellowColor]];
+    [(UIButton *)[self.view viewWithTag:1] setBackgroundColor:UIColorFromRGB(0x21ABA3)];
+    [(UIButton *)[self.view viewWithTag:3] setBackgroundColor:UIColorFromRGB(0x21ABA3)];
 }
 
 - (IBAction)IsHeSelected:(id)obj {
     current_select = TYPE_HE;
-    [(UIButton*)obj setBackgroundColor:[UIColor greenColor]];
-    [(UIButton *)[self.view viewWithTag:1] setBackgroundColor:[UIColor systemGray6Color]];
-    [(UIButton *)[self.view viewWithTag:2] setBackgroundColor:[UIColor systemGray6Color]];
+    [(UIButton*)obj setBackgroundColor:[UIColor yellowColor]];
+    [(UIButton *)[self.view viewWithTag:1] setBackgroundColor:UIColorFromRGB(0x21ABA3)];
+    [(UIButton *)[self.view viewWithTag:2] setBackgroundColor:UIColorFromRGB(0x21ABA3)];
 }
 
 -(void) UpdateBet:(int)num {
