@@ -10,6 +10,9 @@
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
+#define button_color_dark     0x205744
+#define button_color_blue     0x21ABA3
+#define button_color_sliver   0xC0C0C0
 
 enum select_type {
     TYPE_LONG = 0,
@@ -113,7 +116,8 @@ uint8_t click_count = 0;
     ((UILabel *)[self.view viewWithTag:11]).text = [NSString stringWithFormat: @"%d", myMoney];
     
     [self SetBackgroundColor];
-    [(UIButton *)[self.view viewWithTag:1] setBackgroundColor:[UIColor yellowColor]];
+
+    [(UIButton *)[self.view viewWithTag:1] setBackgroundColor:UIColorFromRGB(button_color_sliver)];
 }
 
 -(void)SetBackgroundColor{
@@ -146,54 +150,48 @@ uint8_t click_count = 0;
     self.gradientLayerUp.startPoint = CGPointMake(0, 0);
     self.gradientLayerUp.endPoint = CGPointMake(0, 1);
     
-    self.gradientLayerDown.startPoint = CGPointMake(0, 0.2);
+    self.gradientLayerDown.startPoint = CGPointMake(0, 0);
     self.gradientLayerDown.endPoint = CGPointMake(0, 1);
     
     //设置颜色数组
     CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
-    //UIColorFromRGB(0x205744)
-    //UIColorFromRGB(0x21ABA3)
     CGFloat componennts_first[4] = {32/255.f, 87/255.f, 68/255.f, 1.0f};
     CGFloat componennts_second[4] = {33/255.f, 171/255.f, 163/255.f, 1.0f};
     self.gradientLayerUp.colors = @[(__bridge id)CGColorCreate(colorspace, (CGFloat*)componennts_first), (__bridge id)CGColorCreate(colorspace, (CGFloat*)componennts_second)];
     self.gradientLayerDown.colors = @[(__bridge id)CGColorCreate(colorspace, (CGFloat*)componennts_second), (__bridge id)CGColorCreate(colorspace, (CGFloat*)componennts_first)];
 
-    
-    //设置颜色分割点（范围：0-1）
-    self.gradientLayerUp.locations = @[@(0.0f), @(0.5f)];
-    self.gradientLayerDown.locations = @[@(0.0f), @(0.5f)];
     [self.view sendSubviewToBack:self.upView];
     [self.view sendSubviewToBack:self.downView];
 
-    [(UIButton *)[self.view viewWithTag:1] setBackgroundColor:UIColorFromRGB(0x21ABA3)];
+    [(UIButton *)[self.view viewWithTag:1] setBackgroundColor:UIColorFromRGB(button_color_blue)];
     ((UIButton *)[self.view viewWithTag:1]).layer.cornerRadius = 8;
     ((UIButton *)[self.view viewWithTag:1]).layer.masksToBounds = YES;
 
-    [(UIButton *)[self.view viewWithTag:2] setBackgroundColor:UIColorFromRGB(0x21ABA3)];
+    [(UIButton *)[self.view viewWithTag:2] setBackgroundColor:UIColorFromRGB(button_color_blue)];
     ((UIButton *)[self.view viewWithTag:2]).layer.cornerRadius = 8;
     ((UIButton *)[self.view viewWithTag:2]).layer.masksToBounds = YES;
 
-    [(UIButton *)[self.view viewWithTag:3] setBackgroundColor:UIColorFromRGB(0x21ABA3)];
+    [(UIButton *)[self.view viewWithTag:3] setBackgroundColor:UIColorFromRGB(button_color_blue)];
     ((UIButton *)[self.view viewWithTag:3]).layer.cornerRadius = 8;
     ((UIButton *)[self.view viewWithTag:3]).layer.masksToBounds = YES;
 
-    [(UIButton *)[self.view viewWithTag:100] setBackgroundColor:UIColorFromRGB(0x21ABA3)];
+    [(UIButton *)[self.view viewWithTag:100] setBackgroundColor:UIColorFromRGB(button_color_blue)];
     ((UIButton *)[self.view viewWithTag:100]).layer.cornerRadius = 8;
     ((UIButton *)[self.view viewWithTag:100]).layer.masksToBounds = YES;
 
-    [(UIButton *)[self.view viewWithTag:1000] setBackgroundColor:UIColorFromRGB(0x21ABA3)];
+    [(UIButton *)[self.view viewWithTag:1000] setBackgroundColor:UIColorFromRGB(button_color_blue)];
     ((UIButton *)[self.view viewWithTag:1000]).layer.cornerRadius = 8;
     ((UIButton *)[self.view viewWithTag:1000]).layer.masksToBounds = YES;
 
-    [(UIButton *)[self.view viewWithTag:10000] setBackgroundColor:UIColorFromRGB(0x21ABA3)];
+    [(UIButton *)[self.view viewWithTag:10000] setBackgroundColor:UIColorFromRGB(button_color_blue)];
     ((UIButton *)[self.view viewWithTag:10000]).layer.cornerRadius = 8;
     ((UIButton *)[self.view viewWithTag:10000]).layer.masksToBounds = YES;
 
-    [(UIButton *)[self.view viewWithTag:100000] setBackgroundColor:UIColorFromRGB(0x21ABA3)];
+    [(UIButton *)[self.view viewWithTag:100000] setBackgroundColor:UIColorFromRGB(button_color_blue)];
     ((UIButton *)[self.view viewWithTag:100000]).layer.cornerRadius = 8;
     ((UIButton *)[self.view viewWithTag:100000]).layer.masksToBounds = YES;
 
-    [(UIButton *)[self.view viewWithTag:1000000] setBackgroundColor:UIColorFromRGB(0x21ABA3)];
+    [(UIButton *)[self.view viewWithTag:1000000] setBackgroundColor:UIColorFromRGB(button_color_blue)];
     ((UIButton *)[self.view viewWithTag:1000000]).layer.cornerRadius = 8;
     ((UIButton *)[self.view viewWithTag:1000000]).layer.masksToBounds = YES;
 }
@@ -266,8 +264,7 @@ uint8_t click_count = 0;
     }
     
     [self SavePersonData];
-
-    ((UILabel *)[self.view viewWithTag:55]).text = [NSString stringWithFormat: @"上轮%@", winner];
+    ((UILabel *)[self.view viewWithTag:55]).text = winner;
     if(outcome >=  0) {
         ((UILabel *)[self.view viewWithTag:199]).text = [NSString stringWithFormat: @"+%d", outcome];
     } else {
@@ -291,6 +288,9 @@ uint8_t click_count = 0;
     [self SavePersonData];
     if(3 < timer_count) {
         [(UIProgressView *)[self.view viewWithTag:10] setProgress:((float)(timer_count-4)/10.0) animated:YES];
+        if(timer_count < 15) {
+            ((UILabel *)[self.view viewWithTag:9]).text = [NSString stringWithFormat: @"%d", 14 - timer_count];
+        }
     }
     if(4 == timer_count) {
         NSString *path = [[NSBundle mainBundle] pathForResource:@"back" ofType:@"png"];
@@ -317,23 +317,23 @@ uint8_t click_count = 0;
 
 - (IBAction)IsDragonSelected:(id)obj {
     current_select = TYPE_LONG;
-    [(UIButton*)obj setBackgroundColor:[UIColor yellowColor]];
-    [(UIButton *)[self.view viewWithTag:2] setBackgroundColor:UIColorFromRGB(0x21ABA3)];
-    [(UIButton *)[self.view viewWithTag:3] setBackgroundColor:UIColorFromRGB(0x21ABA3)];
+    [(UIButton *)[self.view viewWithTag:1] setBackgroundColor:UIColorFromRGB(button_color_sliver)];
+    [(UIButton *)[self.view viewWithTag:2] setBackgroundColor:UIColorFromRGB(button_color_blue)];
+    [(UIButton *)[self.view viewWithTag:3] setBackgroundColor:UIColorFromRGB(button_color_blue)];
 }
 
 - (IBAction)IsHuSelected:(id)obj {
     current_select = TYPE_HU;
-    [(UIButton*)obj setBackgroundColor:[UIColor yellowColor]];
-    [(UIButton *)[self.view viewWithTag:1] setBackgroundColor:UIColorFromRGB(0x21ABA3)];
-    [(UIButton *)[self.view viewWithTag:3] setBackgroundColor:UIColorFromRGB(0x21ABA3)];
+    [(UIButton *)[self.view viewWithTag:2] setBackgroundColor:UIColorFromRGB(button_color_sliver)];
+    [(UIButton *)[self.view viewWithTag:1] setBackgroundColor:UIColorFromRGB(button_color_blue)];
+    [(UIButton *)[self.view viewWithTag:3] setBackgroundColor:UIColorFromRGB(button_color_blue)];
 }
 
 - (IBAction)IsHeSelected:(id)obj {
     current_select = TYPE_HE;
-    [(UIButton*)obj setBackgroundColor:[UIColor yellowColor]];
-    [(UIButton *)[self.view viewWithTag:1] setBackgroundColor:UIColorFromRGB(0x21ABA3)];
-    [(UIButton *)[self.view viewWithTag:2] setBackgroundColor:UIColorFromRGB(0x21ABA3)];
+    [(UIButton *)[self.view viewWithTag:3] setBackgroundColor:UIColorFromRGB(button_color_sliver)];
+    [(UIButton *)[self.view viewWithTag:1] setBackgroundColor:UIColorFromRGB(button_color_blue)];
+    [(UIButton *)[self.view viewWithTag:2] setBackgroundColor:UIColorFromRGB(button_color_blue)];
 }
 
 -(void) UpdateBet:(int)num {
