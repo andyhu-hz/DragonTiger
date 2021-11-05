@@ -34,7 +34,6 @@ uint8_t timer_count = 0;
 uint8_t point_long = 0;
 
 uint32_t myMoney = 1000;
-uint8_t click_count = 0;
 
 @interface ViewController ()
 @property (nonatomic, strong) NSTimer * mytimer;
@@ -55,17 +54,10 @@ uint8_t click_count = 0;
 }
 
 -(void)tapDetected{
-    ++ click_count;
-    if(100 == click_count && myMoney < 100) {
-        AudioServicesPlaySystemSound (1262);
-        click_count = 0;
-        myMoney = 1000;
-        bet_long = 0;
-        bet_hu = 0;
-        bet_he = 0;
-        ((UILabel *)[self.view viewWithTag:11]).text = [NSString stringWithFormat: @"%d", myMoney];
-    } else {
+    if(myMoney < 100 && 0 == bet_total) {
         AudioServicesPlaySystemSound (1103);
+        myMoney+=1;
+        ((UILabel *)[self.view viewWithTag:11]).text = [NSString stringWithFormat: @"%d", myMoney];
     }
 }
 
