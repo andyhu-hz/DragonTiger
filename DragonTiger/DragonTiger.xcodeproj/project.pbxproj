@@ -66,10 +66,11 @@
 		BDDA4AC6272A8B1300564900 /* 105.png in Resources */ = {isa = PBXBuildFile; fileRef = BDDA4A92272A8B1300564900 /* 105.png */; };
 		BDDA4AC7272A8B1300564900 /* 412.png in Resources */ = {isa = PBXBuildFile; fileRef = BDDA4A93272A8B1300564900 /* 412.png */; };
 		BDDA4AC8272A8B1300564900 /* 212.png in Resources */ = {isa = PBXBuildFile; fileRef = BDDA4A94272A8B1300564900 /* 212.png */; };
-		BDDA4ACE272B219500564900 /* goldcoin.png in Resources */ = {isa = PBXBuildFile; fileRef = BDDA4ACD272B219500564900 /* goldcoin.png */; };
-		BDDA4B7F27318FAB00564900 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = BDDA4B7E27318FAB00564900 /* back.png */; };
-		BDFB12652732DA890037D048 /* heguan.png in Resources */ = {isa = PBXBuildFile; fileRef = BDFB12642732DA890037D048 /* heguan.png */; };
-		BDFB12E12734F6310037D048 /* desk.png in Resources */ = {isa = PBXBuildFile; fileRef = BDFB12E02734F6310037D048 /* desk.png */; };
+		BDFB12F92736E5600037D048 /* desk.png in Resources */ = {isa = PBXBuildFile; fileRef = BDFB12F42736E5600037D048 /* desk.png */; };
+		BDFB12FA2736E5600037D048 /* goldcoin.png in Resources */ = {isa = PBXBuildFile; fileRef = BDFB12F52736E5600037D048 /* goldcoin.png */; };
+		BDFB12FB2736E5600037D048 /* heguan.png in Resources */ = {isa = PBXBuildFile; fileRef = BDFB12F62736E5600037D048 /* heguan.png */; };
+		BDFB12FC2736E5600037D048 /* paopao.png in Resources */ = {isa = PBXBuildFile; fileRef = BDFB12F72736E5600037D048 /* paopao.png */; };
+		BDFB12FD2736E5600037D048 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = BDFB12F82736E5600037D048 /* back.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -137,10 +138,11 @@
 		BDDA4A92272A8B1300564900 /* 105.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 105.png; sourceTree = "<group>"; };
 		BDDA4A93272A8B1300564900 /* 412.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 412.png; sourceTree = "<group>"; };
 		BDDA4A94272A8B1300564900 /* 212.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 212.png; sourceTree = "<group>"; };
-		BDDA4ACD272B219500564900 /* goldcoin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = goldcoin.png; sourceTree = "<group>"; };
-		BDDA4B7E27318FAB00564900 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = back.png; path = ../../../../../back.png; sourceTree = "<group>"; };
-		BDFB12642732DA890037D048 /* heguan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heguan.png; sourceTree = "<group>"; };
-		BDFB12E02734F6310037D048 /* desk.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = desk.png; path = ../../../../../desk.png; sourceTree = "<group>"; };
+		BDFB12F42736E5600037D048 /* desk.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = desk.png; sourceTree = "<group>"; };
+		BDFB12F52736E5600037D048 /* goldcoin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = goldcoin.png; sourceTree = "<group>"; };
+		BDFB12F62736E5600037D048 /* heguan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heguan.png; sourceTree = "<group>"; };
+		BDFB12F72736E5600037D048 /* paopao.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = paopao.png; sourceTree = "<group>"; };
+		BDFB12F82736E5600037D048 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,10 +194,11 @@
 		BDDA4A60272A8AA200564900 /* resource */ = {
 			isa = PBXGroup;
 			children = (
-				BDFB12E02734F6310037D048 /* desk.png */,
-				BDFB12642732DA890037D048 /* heguan.png */,
-				BDDA4B7E27318FAB00564900 /* back.png */,
-				BDDA4ACD272B219500564900 /* goldcoin.png */,
+				BDFB12F82736E5600037D048 /* back.png */,
+				BDFB12F42736E5600037D048 /* desk.png */,
+				BDFB12F52736E5600037D048 /* goldcoin.png */,
+				BDFB12F62736E5600037D048 /* heguan.png */,
+				BDFB12F72736E5600037D048 /* paopao.png */,
 				BDDA4A7E272A8B1200564900 /* 101.png */,
 				BDDA4A83272A8B1200564900 /* 102.png */,
 				BDDA4A81272A8B1200564900 /* 103.png */,
@@ -311,18 +314,18 @@
 			files = (
 				BDDA4ABE272A8B1300564900 /* 106.png in Resources */,
 				BDDA4ABC272A8B1300564900 /* 112.png in Resources */,
+				BDFB12F92736E5600037D048 /* desk.png in Resources */,
 				BDDA4AAF272A8B1300564900 /* 202.png in Resources */,
 				BDDA4AC7272A8B1300564900 /* 412.png in Resources */,
 				BDDA4AA9272A8B1300564900 /* 204.png in Resources */,
-				BDFB12E12734F6310037D048 /* desk.png in Resources */,
 				BDDA4AA6272A8B1300564900 /* 107.png in Resources */,
 				BDDA4AB8272A8B1300564900 /* 210.png in Resources */,
 				BDDA4AC4272A8B1300564900 /* 111.png in Resources */,
-				BDDA4B7F27318FAB00564900 /* back.png in Resources */,
 				BDDA4AA3272A8B1300564900 /* 109.png in Resources */,
 				BDDA4A9D272A8B1300564900 /* 213.png in Resources */,
 				BDDA4AA1272A8B1300564900 /* 205.png in Resources */,
 				BDDA4AA5272A8B1300564900 /* 108.png in Resources */,
+				BDFB12FC2736E5600037D048 /* paopao.png in Resources */,
 				BDDA4AA4272A8B1300564900 /* 104.png in Resources */,
 				BDDA4AB4272A8B1300564900 /* 305.png in Resources */,
 				BDDA4AC1272A8B1300564900 /* 110.png in Resources */,
@@ -346,6 +349,7 @@
 				BDDA4ABA272A8B1300564900 /* 307.png in Resources */,
 				BDDA4AA0272A8B1300564900 /* 403.png in Resources */,
 				BDDA4ABB272A8B1300564900 /* 406.png in Resources */,
+				BDFB12FA2736E5600037D048 /* goldcoin.png in Resources */,
 				BDDA4AAE272A8B1300564900 /* 401.png in Resources */,
 				BDDA4AB1272A8B1300564900 /* 306.png in Resources */,
 				BDDA4AAB272A8B1300564900 /* 301.png in Resources */,
@@ -362,11 +366,11 @@
 				BDDA4A95272A8B1300564900 /* 201.png in Resources */,
 				BDDA4AB3272A8B1300564900 /* 303.png in Resources */,
 				BDDA4A9B272A8B1300564900 /* 410.png in Resources */,
+				BDFB12FB2736E5600037D048 /* heguan.png in Resources */,
 				BDDA4AB0272A8B1300564900 /* 405.png in Resources */,
-				BDFB12652732DA890037D048 /* heguan.png in Resources */,
+				BDFB12FD2736E5600037D048 /* back.png in Resources */,
 				BDB336CC2726E8D700E0CAB3 /* Assets.xcassets in Resources */,
 				BDDA4AA7272A8B1300564900 /* 408.png in Resources */,
-				BDDA4ACE272B219500564900 /* goldcoin.png in Resources */,
 				BDB336CA2726E8D500E0CAB3 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -526,7 +530,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 4V88MV5SWN;
+				DEVELOPMENT_TEAM = M932RC5J66;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DragonTiger/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "龙虎斗";
@@ -542,7 +546,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = cisco.com.DragonTiger;
+				PRODUCT_BUNDLE_IDENTIFIER = cisco.com.dragontriger;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -558,7 +562,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 4V88MV5SWN;
+				DEVELOPMENT_TEAM = M932RC5J66;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DragonTiger/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "龙虎斗";
@@ -574,7 +578,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = cisco.com.DragonTiger;
+				PRODUCT_BUNDLE_IDENTIFIER = cisco.com.dragontriger;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				TARGETED_DEVICE_FAMILY = 1;

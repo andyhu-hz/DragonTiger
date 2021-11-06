@@ -22,10 +22,10 @@ enum select_type {
 
 uint8_t current_select = TYPE_LONG;
 
-uint32_t bet_long = 0;
-uint32_t bet_hu = 0;
-uint32_t bet_he = 0;
-uint32_t bet_total = 0;
+uint64_t bet_long = 0;
+uint64_t bet_hu = 0;
+uint64_t bet_he = 0;
+uint64_t bet_total = 0;
 
 bool in_round = true;
 
@@ -33,7 +33,7 @@ uint32_t poker[8][4][13] = {0};
 uint8_t timer_count = 0;
 uint8_t point_long = 0;
 
-uint32_t myMoney = 1000;
+uint64_t myMoney = 1000;
 
 @interface ViewController ()
 @property (nonatomic, strong) NSTimer * mytimer;
@@ -81,9 +81,19 @@ uint32_t myMoney = 1000;
     path = [[NSBundle mainBundle] pathForResource:@"heguan" ofType:@"png"];
     image = [UIImage imageWithContentsOfFile:path];
     [((UIImageView *)[self.view viewWithTag:300]) setImage:image];
+    
     path = [[NSBundle mainBundle] pathForResource:@"desk" ofType:@"png"];
     image = [UIImage imageWithContentsOfFile:path];
     [((UIImageView *)[self.view viewWithTag:301]) setImage:image];
+    
+    path = [[NSBundle mainBundle] pathForResource:@"paopao" ofType:@"png"];
+    image = [UIImage imageWithContentsOfFile:path];
+    [((UIImageView *)[self.view viewWithTag:302]) setImage:image];
+    
+    path = [[NSBundle mainBundle] pathForResource:@"timer" ofType:@"png"];
+    image = [UIImage imageWithContentsOfFile:path];
+    [((UIImageView *)[self.view viewWithTag:303]) setImage:image];
+
     
     [self.view sendSubviewToBack:((UIImageView *)[self.view viewWithTag:301])];
     [self.view sendSubviewToBack:((UIImageView *)[self.view viewWithTag:300])];
