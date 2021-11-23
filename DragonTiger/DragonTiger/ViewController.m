@@ -56,7 +56,7 @@ uint64_t myMoney = 1000;
 -(void)tapDetected{
     if(myMoney < 100 && 0 == bet_total) {
         AudioServicesPlaySystemSound (1103);
-        myMoney+=1;
+        myMoney=100;
         ((UILabel *)[self.view viewWithTag:11]).text = [NSString stringWithFormat: @"%d", myMoney];
     }
 }
@@ -109,8 +109,8 @@ uint64_t myMoney = 1000;
     
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapDetected)];
     singleTap.numberOfTapsRequired = 1;
-    [((UIImageView *)[self.view viewWithTag:200])  setUserInteractionEnabled:YES];
-    [((UIImageView *)[self.view viewWithTag:200])  addGestureRecognizer:singleTap];
+    [((UIImageView *)[self.view viewWithTag:300])  setUserInteractionEnabled:YES];
+    [((UIImageView *)[self.view viewWithTag:300])  addGestureRecognizer:singleTap];
   
     
     self.mytimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(onTimer) userInfo:nil repeats:YES];
@@ -339,7 +339,7 @@ uint64_t myMoney = 1000;
 }
 
 -(void) UpdateBet:(int)num {
-    if(myMoney >= num) {
+    if(0 != myMoney && myMoney >= num) {
         myMoney -= num;
         bet_total += num;
         if(TYPE_LONG == current_select) {
@@ -372,14 +372,14 @@ uint64_t myMoney = 1000;
         [self UpdateBet:10000];
     }
 }
-- (IBAction)add100k:(id)obj {
+- (IBAction)half_in:(id)obj {
     if(in_round) {
-        [self UpdateBet:100000];
+        [self UpdateBet:myMoney/2];
     }
 }
-- (IBAction)add1m:(id)obj {
+- (IBAction)all_in:(id)obj {
     if(in_round) {
-        [self UpdateBet:1000000];
+        [self UpdateBet:myMoney];
     }
 }
 
